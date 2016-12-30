@@ -10,11 +10,11 @@ namespace ControlFlowDemo
     {
         static int CalculateControlDigit(long number)
         {
-            IEnumerable<int> digits = GetDigitsFromLeastSignificant(number);
-            IEnumerable<int> factors = GetMultiplicativeFactors();
-            IEnumerable<int> weightedDigits = AddWeight(digits, factors);
-
-            int sum = Sum(weightedDigits);
+            int sum =
+                number
+                .GetDigitsFromLeastSignificant()
+                .AddWeights(MultiplicativeFactors)
+                .Sum();
 
             int result = sum % 11;
             if (result == 10)
@@ -23,51 +23,12 @@ namespace ControlFlowDemo
             return result;
         }
 
-        private static int Sum(IEnumerable<int> values)
+        private static IEnumerable<int> MultiplicativeFactors
         {
-            int sum = 0;
-
-            foreach (int value in values)
+            get
             {
-                sum += value;
+                return new int[] { 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3 };
             }
-
-            return sum;
-        }
-
-        private static IEnumerable<int> AddWeight(IEnumerable<int> values, IEnumerable<int> factors)
-        {
-            IEnumerator<int> factor = factors.GetEnumerator();
-
-            List<int> weightedDigits = new List<int>();
-
-            foreach (int value in values)
-            {
-                factor.MoveNext();
-                weightedDigits.Add(factor.Current * value);
-            }
-
-            return weightedDigits;
-        }
-
-        private static IEnumerable<int> GetMultiplicativeFactors()
-        {
-            return new int[] { 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3 };
-        }
-
-        private static IEnumerable<int> GetDigitsFromLeastSignificant(long number)
-        {
-            List<int> digits = new List<int>();
-
-            do
-            {
-                int digit = (int)(number % 10);
-                digits.Add(digit);
-                number /= 10;
-            }
-            while (number > 0);
-
-            return digits;
         }
 
         static void Main(string[] args)
