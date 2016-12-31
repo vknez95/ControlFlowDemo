@@ -6,17 +6,12 @@ namespace ControlFlowDemo
     {
         public static IEnumerable<int> GetDigitsFromLeastSignificant(this long number)
         {
-            List<int> digits = new List<int>();
-
             do
             {
-                int digit = (int)(number % 10);
-                digits.Add(digit);
+                yield return (int)(number % 10);
                 number /= 10;
             }
             while (number > 0);
-
-            return digits;
         }
     }
 }
