@@ -27,7 +27,11 @@ namespace ControlFlowDemo
         {
             get
             {
-                return new int[] { 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3 };
+                while (true)
+                {
+                    yield return 1;
+                    yield return 3;
+                }
             }
         }
 
